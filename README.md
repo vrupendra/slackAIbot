@@ -2,6 +2,91 @@
 
 An intelligent Slack bot that helps manage incidents with AI-powered analysis, Jira integration, and Confluence documentation.
 
+## Architecture
+
+```mermaid
+graph TD
+    subgraph Slack Workspace
+        SC[Slack Channels]
+        SM[Slack Messages]
+    end
+
+    subgraph SlackAIBot
+        direction TB
+        APP[Application Core] --> CMD[Command Handlers]
+        APP --> SERV[Services]
+        
+        subgraph Command Handlers
+            CMD --> SUM[Summarize]
+            CMD --> TL[Timeline]
+            CMD --> RCA[RCA Generator]
+            CMD --> JT[Jira Ticket]
+            CMD --> CP[Confluence Page]
+        end
+        
+        subgraph Services
+            SERV --> AI[AI Service]
+            SERV --> JI[Jira Integration]
+            SERV --> CI[Confluence Integration]
+        end
+    end
+
+    subgraph External Services
+        GPT[OpenAI GPT-4]
+        JIRA[Jira]
+        CONF[Confluence]
+    end
+
+    SC --> APP
+    SM --> APP
+    
+    AI --> GPT
+    JI --> JIRA
+    CI --> CONF
+
+    SUM --> AI
+    RCA --> AI
+    JT --> JI
+    CP --> CI
+
+    style SlackAIBot fill:#f5f5f5,stroke:#333,stroke-width:2px
+    style External Services fill:#e6f3ff,stroke:#333,stroke-width:2px
+    style Slack Workspace fill:#f0fff0,stroke:#333,stroke-width:2px
+```
+
+### Architecture Overview
+
+1. **Slack Integration Layer**
+   - Handles real-time message events from Slack
+   - Processes slash commands
+   - Manages message threading and responses
+
+2. **Command Handlers**
+   - `/summarize`: Generates incident summaries
+   - `/timeline`: Creates chronological event timelines
+   - `/rca`: Generates Root Cause Analysis reports
+   - `/create-ticket`: Creates Jira tickets
+   - `/create-confluence`: Creates Confluence documentation
+
+3. **Core Services**
+   - AI Service: Integrates with OpenAI's GPT-4 for intelligent analysis
+   - Jira Integration: Manages ticket creation and updates
+   - Confluence Integration: Handles documentation creation
+
+4. **External Services**
+   - OpenAI GPT-4: Provides AI-powered analysis and summaries
+   - Jira: Issue tracking and project management
+   - Confluence: Documentation and knowledge base
+
+### Data Flow
+
+1. Users interact with the bot in Slack channels
+2. Command handlers process requests
+3. Services layer communicates with external APIs
+4. Results are formatted and posted back to Slack
+5. Documentation is created in Confluence
+6. Tickets are created/updated in Jira
+
 ## Features
 
 - 🤖 AI-powered incident analysis using GPT-4
