@@ -87,6 +87,18 @@ graph TD
 5. Documentation is created in Confluence
 6. Tickets are created/updated in Jira
 
+### Detailed Technical Documentation
+
+For more detailed technical documentation and diagrams, please see:
+- [Architecture Overview](docs/ARCHITECTURE.md)
+- [Technical Diagrams](docs/TECHNICAL_DIAGRAMS.md)
+  - Sequence Diagrams
+  - Component Architecture
+  - Data Flow Diagrams
+  - State Machine Diagrams
+  - Infrastructure Architecture
+  - Error Handling Flow
+
 ## Features
 
 - 🤖 AI-powered incident analysis using GPT-4
