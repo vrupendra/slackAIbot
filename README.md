@@ -98,6 +98,11 @@ For more detailed technical documentation and diagrams, please see:
   - State Machine Diagrams
   - Infrastructure Architecture
   - Error Handling Flow
+- [Project Recreation Template](docs/PROMPT_TEMPLATE.md)
+  - Base Project Template
+  - Language-Specific Guidelines
+  - Implementation Steps
+  - Best Practices
 
 ## Features
 
