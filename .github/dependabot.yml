@@ -1,0 +1,37 @@
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    # Look for package.json and package-lock.json files in the root directory
+    directory: "/"
+    # Check for updates once a week
+    schedule:
+      interval: "weekly"
+    # Labels on pull requests for version updates
+    labels:
+      - "dependencies"
+      - "automated"
+    # Specify target branch
+    target-branch: "main"
+    # Allow up to 10 open pull requests for npm dependencies
+    open-pull-requests-limit: 10
+    # Group all minor and patch updates together
+    groups:
+      minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    # Raise pull requests for version updates
+    # to npm against the main branch
+    versioning-strategy: auto
+    # Set reviewers for pull requests
+    reviewers:
+      - "vrupendra"
+    # Ignore certain dependencies
+    ignore:
+      # Ignore updates to packages that start with '@types'
+      # Temporary workaround for packages that may have incompatible types
+      - dependency-name: "@types/*"
+        update-types: ["version-update:semver-major"]
