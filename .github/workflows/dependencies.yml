@@ -12,16 +12,25 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Check for dependency updates
-      uses: dependabot/dependabot-core@v3
+    - name: Use Node.js
+      uses: actions/setup-node@v3
       with:
-        package-manager: npm
-        target-branch: main
-        labels: dependencies
-        versioning-strategy: auto
-    
-    - name: Auto-merge minor updates
-      uses: ahmadnassri/action-dependabot-auto-merge@v2
+        node-version: '20.x'
+        cache: 'npm'
+        cache-dependency-path: '**/package-lock.json'
+
+    - name: Check for outdated dependencies
+      run: npm outdated || true
+
+    - name: Setup Python for Dependabot
+      uses: actions/setup-python@v4
       with:
-        target: minor
-        github-token: ${{ secrets.GH_TOKEN }}
+        python-version: '3.x'
+
+    - name: Install Dependabot CLI
+      run: pip install dependabot-cli
+
+    - name: Run Dependabot
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: dependabot check
